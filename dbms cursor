@@ -8,7 +8,7 @@ CREATE TABLE o_rollcall (
     address VARCHAR(20)
 );
 
--- initial data
+
 INSERT INTO o_rollcall VALUES
 (1, 'Hitesh', 'Nandura'),
 (2, 'Piyush', 'MP'),
@@ -61,6 +61,6 @@ END//
 
 DELIMITER ;
 
--- run and verify
 CALL merge_rollcall(2);
 SELECT * FROM o_rollcall ORDER BY roll_no;
+
