@@ -1,24 +1,16 @@
-create database Payment1;
-
-use Payment1;
-
-create table Payment(cust_id int, amount int, mode varchar(20), payment_id int);
-
-insert into Payment(cust_id, amount, mode, payment_id)
-values(1,200,'online',10),
-      (2,300,'online',11),
-      (3,500,'offline',12);
-
-select * from Payment;
-
-UPDATE Payment SET amount = 600 WHERE payment_id = 12;
-
-select * from Payment;
-
-SELECT * FROM Payment WHERE mode = 'online';
-
-SELECT COUNT(*) AS total_payments FROM Payment;
-
-DELETE FROM Payment WHERE payment_id = 11;
-
-select * from Payment;
+CREATE DATABASE PaymentDB;
+USE PaymentDB;
+CREATE TABLE payment_t (
+    cust_id INT NOT NULL,
+    amount INT CHECK (amount > 0),
+    mode VARCHAR(20) CHECK (mode IN ('online', 'offline')),
+    payment_id INT PRIMARY KEY
+);
+ALTER TABLE payment_t ADD payment_date DATE;
+ALTER TABLE payment_t MODIFY amount DECIMAL(10,2);
+ALTER TABLE payment_t CHANGE mode payment_mode VARCHAR(20);
+CREATE VIEW online_payments AS
+SELECT * FROM payment_t WHERE payment_mode = 'online';
+CREATE INDEX idx_amount ON payment_t(amount);
+ALTER TABLE payment_t DROP COLUMN payment_date;
+DROP TABLE payment_t;
