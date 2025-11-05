@@ -31,12 +31,12 @@ DELIMITER $$
 
 CREATE PROCEDURE fine_calculation(IN rno INT, IN bname CHAR(20))
 BEGIN
-    -- Declare variables
+    
     DECLARE i_date DATE;
     DECLARE diff INT DEFAULT 0;
     DECLARE fine_amt INT DEFAULT 0;
 
-    -- Declare exception conditions
+    
     DECLARE no_record CONDITION FOR SQLSTATE '02000';
 
     -- Handler for no data found
@@ -45,21 +45,21 @@ BEGIN
         SELECT CONCAT('No issued book found for Roll_no: ', rno, ' and Book: ', bname) AS error_message;
     END;
 
-    -- Handler for SQL exceptions
+  
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
     BEGIN
         SELECT 'An SQL exception occurred. Please check the tables and inputs.' AS error_message;
     END;
 
-    -- Step 1: Get Date_of_Issue for given Roll_no and Book name
+   
     SELECT Date_of_Issue INTO i_date
     FROM Borrower
     WHERE Roll_no = rno AND Name_of_Book = bname AND Status = 'I';
 
-    -- Step 2: Calculate number of days since Date_of_Issue
+    
     SET diff = DATEDIFF(CURDATE(), i_date);
 
-    -- Step 3: Calculate fine based on days
+   
     IF diff > 15 AND diff <= 30 THEN
         SET fine_amt = (diff - 15) * 5;
         INSERT INTO Fine VALUES (rno, CURDATE(), fine_amt);
@@ -68,7 +68,7 @@ BEGIN
         INSERT INTO Fine VALUES (rno, CURDATE(), fine_amt);
     END IF;
 
-    -- Step 4: Update book status to 'R' (Returned)
+   
     UPDATE Borrower
     SET Status = 'R'
     WHERE Roll_no = rno AND Name_of_Book = bname;
@@ -76,7 +76,7 @@ END $$
 
 DELIMITER ;
 
--- Execute procedure
+
 CALL fine_calculation(3, 'DBMS');
 SELECT * FROM Fine;
 SELECT * FROM Borrower;
@@ -91,3 +91,4 @@ CALL fine_calculation(4, 'Python');
 SELECT * FROM Fine;
 
 SELECT * FROM Borrower;
+
