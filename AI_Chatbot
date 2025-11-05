@@ -1,6 +1,6 @@
 import re
 
-# Define pattern-response pairs
+
 pairs = [
     (r'I am (.*)', lambda match: f"Hello {match.group(1)}, how are you feeling today?"),
     (r'feeling (.*)', lambda match: f"Good to hear you are feeling {match.group(1)}."),
