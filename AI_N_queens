@@ -47,4 +47,16 @@ if solve_n_queens(board, 0, N):
 else:
     print("No solution exists.")
 
+OUTPUT
+
+Enter the number of queens:
+4
+[0, 1, 0, 0]
+[0, 0, 0, 1]
+[1, 0, 0, 0]
+[0, 0, 1, 0]
+
+Enter the number of queens:
+3
+No solution exists.
 
