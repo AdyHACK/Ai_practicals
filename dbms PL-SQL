@@ -39,7 +39,7 @@ BEGIN
     
     DECLARE no_record CONDITION FOR SQLSTATE '02000';
 
-    -- Handler for no data found
+    
     DECLARE CONTINUE HANDLER FOR no_record
     BEGIN
         SELECT CONCAT('No issued book found for Roll_no: ', rno, ' and Book: ', bname) AS error_message;
@@ -91,4 +91,5 @@ CALL fine_calculation(4, 'Python');
 SELECT * FROM Fine;
 
 SELECT * FROM Borrower;
+
 
